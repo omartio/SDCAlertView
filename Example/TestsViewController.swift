@@ -96,7 +96,7 @@ class TestsViewController: UITableViewController {
             let alert = AlertController(title: "Title", message: "Message", preferredStyle: .actionSheet)
             var actions: [AlertAction] = [AlertAction(title: "Cancel", style: .preferred),
                                           AlertAction(title: "Test 1", style: .normal)]
-            actions.forEach({ alert.addAction($0) })
+            alert.updateActions(actions, animated: false)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 actions.append(AlertAction(title: "Test 2", style: .normal))
                 alert.updateActions(actions)

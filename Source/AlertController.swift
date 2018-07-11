@@ -227,6 +227,7 @@ public class AlertController: UIViewController {
             return
         }
         self.actions = actions
+        guard isViewLoaded else { return }
         self.alert.prepareLayout()
         if animated {
             UIView.animate(withDuration: 0.25) {
