@@ -214,6 +214,28 @@ public class AlertController: UIViewController {
     public func addAction(_ action: AlertAction) {
         self.actions.append(action)
     }
+    
+    @objc
+    public func removeAction(_ action: AlertAction) {
+        if let index = actions.index(of: action) {
+            self.actions.remove(at: index)
+        }
+    }
+    @objc
+    public func updateActions(_ actions: [AlertAction], animated: Bool = true) {
+        guard preferredStyle == .actionSheet else {
+            return
+        }
+        self.actions = actions
+        self.alert.prepareLayout()
+        if animated {
+            UIView.animate(withDuration: 0.25) {
+                self.view.layoutIfNeeded()
+            }
+        } else {
+            self.view.layoutIfNeeded()
+        }
+    }
 
     /// Adds a text field to the alert.
     ///

@@ -92,7 +92,20 @@ class TestsViewController: UITableViewController {
                 action.accessibilityIdentifier = "cancel"
                 alert.addAction(action)
                 alert.present()
-            
+        case 12:
+            let alert = AlertController(title: "Title", message: "Message", preferredStyle: .actionSheet)
+            var actions: [AlertAction] = [AlertAction(title: "Cancel", style: .preferred),
+                                          AlertAction(title: "Test 1", style: .normal)]
+            actions.forEach({ alert.addAction($0) })
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                actions.append(AlertAction(title: "Test 2", style: .normal))
+                alert.updateActions(actions)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    actions.removeLast()
+                    alert.updateActions(actions)
+                }
+            }
+            alert.present()
             default: break
         }
     }
