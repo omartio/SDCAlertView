@@ -288,7 +288,8 @@ public class AlertController: UIViewController {
     }
 
     public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return self.presentingViewController?.supportedInterfaceOrientations ?? super.supportedInterfaceOrientations
+        return self.presentingViewController?.supportedInterfaceOrientations
+            ?? super.supportedInterfaceOrientations
     }
 
     // MARK: - Private
@@ -301,13 +302,14 @@ public class AlertController: UIViewController {
     }
 
     private func listenForKeyboardChanges() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardChange),
-                                               name: .UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default
+            .addObserver(self, selector: #selector(self.keyboardChange),
+                         name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
 
     @objc
     private func keyboardChange(_ notification: Notification) {
-        let newFrameValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue
+        let newFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
         guard let newFrame = newFrameValue?.cgRectValue else {
             return
         }
@@ -386,10 +388,10 @@ public class AlertController: UIViewController {
         }
 
         let textFieldsViewController = TextFieldsViewController(textFields: textFields)
-        textFieldsViewController.willMove(toParentViewController: self)
-        self.addChildViewController(textFieldsViewController)
+        textFieldsViewController.willMove(toParent: self)
+        self.addChild(textFieldsViewController)
         alert.textFieldsViewController = textFieldsViewController
-        textFieldsViewController.didMove(toParentViewController: self)
+        textFieldsViewController.didMove(toParent: self)
     }
 
     private func addChromeTapHandlerIfNecessary() {
