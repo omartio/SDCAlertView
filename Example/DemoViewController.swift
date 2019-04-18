@@ -53,7 +53,7 @@ final class DemoViewController: UITableViewController {
         switch self.contentControl.selectedSegmentIndex {
             case 1:
                 let contentView = alert.contentView
-                let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+                let spinner = UIActivityIndicatorView(style: .gray)
                 spinner.translatesAutoresizingMaskIntoConstraints = false
                 spinner.startAnimating()
                 contentView.addSubview(spinner)
