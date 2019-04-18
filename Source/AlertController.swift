@@ -267,6 +267,7 @@ public class AlertController: UIViewController {
     /// - parameter completion: An optional closure that's called when the dismissal finishes.
     @objc(dismissViewControllerAnimated:completion:)
     public override func dismiss(animated: Bool = true, completion: (() -> Void)? = nil) {
+        stopListenForKeyboardChanges()
         self.presentingViewController?.dismiss(animated: animated, completion: completion)
     }
 
@@ -305,6 +306,10 @@ public class AlertController: UIViewController {
         NotificationCenter.default
             .addObserver(self, selector: #selector(self.keyboardChange),
                          name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
+    private func stopListenForKeyboardChanges() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
 
     @objc
@@ -411,6 +416,10 @@ public class AlertController: UIViewController {
                 self.outsideTapHandler?()
             }
         }
+    }
+    
+    deinit {
+        stopListenForKeyboardChanges()
     }
 }
 
